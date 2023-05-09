@@ -8,7 +8,7 @@ const app = express()
 
 // Middleware
 app.use(express.json())
-app.use(express.urlencoded({entended: false}))
+app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 // Routes
