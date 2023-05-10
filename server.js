@@ -3,8 +3,8 @@ const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const userRoute = require("./routes/userRoute")
-
+const userRoute = require("./routes/userRoute");
+const errorHandler = require("./middleWare/errorMiddleware");
 const app = express()
 
 // Middleware
@@ -20,9 +20,12 @@ app.get("/", (req, res) => {
     res.send("Home Page");
 })
 
-const PORT = process.env.PORT || 5000;
+
+// Error Middleware
+app.use(errorHandler); 
 
 // Connect to Db and Start Server
+const PORT = process.env.PORT || 5000;
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
