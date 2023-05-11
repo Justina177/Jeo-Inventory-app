@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 
 
 // Error Middleware
-app.use(errorHandler); 
+app.use(errorHandler)
 
 // Connect to Db and Start Server
 const PORT = process.env.PORT || 5000;
