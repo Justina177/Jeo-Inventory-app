@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 })
 
 
-// Error Middleware
+// Error Middleware 
 app.use(errorHandler)
 
 // Connect to Db and Start Server
@@ -37,4 +37,5 @@ mongoose
         })
 
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
+    

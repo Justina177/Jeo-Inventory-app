@@ -129,10 +129,32 @@ const logout = asyncHandler( async (req, res) => {
     
 });
 
+// Get User Data
+const getUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        const { _id, name, email, photo, phone, bio } = user;
+        res.status(200).json({
+            _id, 
+            name, 
+            email, 
+            photo, 
+            phone, 
+            bio,     
+        });
+    } else {
+        res.status(400)
+        throw new Error("User Not Found")
+    } 
+});
+
+
 
 
 module.exports = {
     registerUser,
     loginUser,
     logout,
+    getUser
 };
