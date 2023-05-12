@@ -73,7 +73,7 @@ const loginUser = asyncHandler( async (req, res) => {
     // Validate Request 
     if (!email || !password) {
         res.status(400);
-        throw new error("Please add email and password");
+        throw new Error("Please add email and password");
     }
 
     //  Check if User Exists
@@ -81,7 +81,7 @@ const loginUser = asyncHandler( async (req, res) => {
 
     if (!user) {
         res.status(400);
-        throw new error("User not found, please signup");
+        throw new Error("User not found, please signup");
     }
 
     // User exits, Check if password is correct
@@ -167,7 +167,34 @@ const loginStatus = asyncHandler (async (req, res) => {
 
 //  Update User
 const updateUser = asyncHandler (async (req, res) => {
-    res.send("User updated")
+    // res.send("User updated")
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        const { name, email, photo, phone, bio } = user;
+        user.email = email;
+        user.name = req.body.name || name;
+        user.phone = req.body.phone || phone;
+        user.bio = req.body.bio || bio;
+        user.photo = req.body.photo || photo;
+
+        const updatedUser = await user.save()
+        res.status(200).json({ 
+            name: updatedUser.name, 
+            email: updatedUser.email,
+            photo: updatedUser.photo,
+            phone: updatedUser.phone,
+            bio: updatedUser.bio,
+        })
+    } else {
+        res.status(404)
+        throw new Error("User Not Found")
+    }
+});
+
+// Update password
+const changePassword = asyncHandler (async (req, res) => {
+    res.send(" Succefullfully updated")
 })
 
 
@@ -180,4 +207,5 @@ module.exports = {
     getUser,
     loginStatus,
     updateUser,
+    changePassword,
 };
